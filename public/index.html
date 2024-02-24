@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple To-Do List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>TO DO LIST</h1>
+
+    <form id="todoForm">
+      <label for="task"> </label>
+      <input type="text" id="task" name="task" required placeholder="Task" />
+      <button type="submit">Add Task</button>
+    </form>
+
+    <ul id="taskList"></ul>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Find tasks from server when ever web page loads
+        fetchTasks();
+        // Handling form submission
+        const form = document.getElementById("todoForm");
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const taskInput = document.getElementById("task");
+          const task = taskInput.value;
+
+          // Now add the task
+          addTask(task);
+        });
+
+        // Function to find tasks from the server
+        function fetchTasks() {
+          fetch("/api/tasks")
+            .then((response) => response.json())
+            .then((data) => {
+              // Call a function to update the tasks on the webpage
+              updateTaskList(data);
+            })
+            .catch((error) => console.error("Error fetching tasks:", error));
+        }
+
+        // Function to add a task
+        function addTask(task) {
+          fetch("/api/tasks", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ task }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // After adding the task, find updated tasks from the server
+              fetchTasks();
+            })
+            .catch((error) => console.error("Error adding task:", error));
+        }
+
+        // Function to remove a task
+        function removeTask(taskId) {
+          fetch(`/api/tasks/${taskId}`, {
+            method: "DELETE",
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // After removing the task, find updated tasks from the server
+              fetchTasks();
+            })
+            .catch((error) => console.error("Error removing task:", error));
+        }
+
+        // Function to update the task list on the webpage
+        function updateTaskList(tasks) {
+          const taskList = document.getElementById("taskList");
+
+          // Remove existing tasks
+          taskList.innerHTML = "";
+
+          // Add each task to the list
+          tasks.forEach((task) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = task.task;
+
+            // Adding a button to remove the task
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.addEventListener("click", () => removeTask(task.id));
+
+            listItem.appendChild(removeButton);
+
+            taskList.appendChild(listItem);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-image: url("https://www.visiondesign.com/wp-content/uploads/to-do-list-background.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  overflow: hidden; /* Hide vertical scroll bar initially */
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-top: 20px; /* Add margin to the top of the container */
+  overflow-y: auto; /* Enable vertical scrolling for the container */
+  max-height: 80vh; /* Set a maximum height for the container */
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 24px; /* Adjust the font size */
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+td {
+  padding: 8px;
+}
+
+label {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+input[type="text"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  width: 70%; /* Adjust the width */
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #1a73e8;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1558d6;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+li {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+li button:hover {
+  background-color: #c0392b;
+}
+
+/* Media Query for smaller screens */
+@media only screen and (max-width: 600px) {
+  input[type="text"] {
+    width: 100%; /* Full width on smaller screens */
+  }
+
+  button {
+    width: 100%; /* Full width on smaller screens */
+  }
+}
